@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alphabet Viewer</title>
+    <style>
+        body { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f0f0f0; }
+        img { max-width: 95%; max-height: 90vh; display: none; }
+        img.active { display: block; }
+        button { margin: 10px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <img src="src/images/a.png" alt="A">
+    <img src="src/images/b.png" alt="B">
+    <img src="src/images/c.png" alt="C">
+    <img src="src/images/d.png" alt="D">
+    <img src="src/images/e.png" alt="E">
+    <img src="src/images/f.png" alt="F">
+    <img src="src/images/g.png" alt="G">
+    <img src="src/images/h.png" alt="H">
+    <img src="src/images/i.png" alt="I">
+    <img src="src/images/j.png" alt="J">
+    <img src="src/images/k.png" alt="K">
+    <img src="src/images/l.png" alt="L">
+    <img src="src/images/m.png" alt="M">
+    <img src="src/images/n.png" alt="N">
+    <img src="src/images/o.png" alt="O">
+    <img src="src/images/p.png" alt="P">
+    <img src="src/images/q.png" alt="Q">
+    <img src="src/images/r.png" alt="R">
+    <img src="src/images/s.png" alt="S">
+    <img src="src/images/t.png" alt="T">
+    <img src="src/images/u.png" alt="U">
+    <img src="src/images/v.png" alt="V">
+    <img src="src/images/w.png" alt="W">
+    <img src="src/images/x.png" alt="X">
+    <img src="src/images/y.png" alt="Y">
+    <img src="src/images/z.png" alt="Z">
+
+    <!-- Audio files -->
+    <audio id="audioA" src="src/audio/a.mp3"></audio>
+    <audio id="audioB" src="src/audio/b.mp3"></audio>
+    <audio id="audioC" src="src/audio/c.mp3"></audio>
+    <audio id="audioD" src="src/audio/d.mp3"></audio>
+    <audio id="audioE" src="src/audio/e.mp3"></audio>
+    <audio id="audioF" src="src/audio/f.mp3"></audio>
+    <audio id="audioG" src="src/audio/g.mp3"></audio>
+    <audio id="audioH" src="src/audio/h.mp3"></audio>
+    <audio id="audioI" src="src/audio/i.mp3"></audio>
+    <audio id="audioJ" src="src/audio/j.mp3"></audio>
+    <audio id="audioK" src="src/audio/k.mp3"></audio>
+    <audio id="audioL" src="src/audio/l.mp3"></audio>
+    <audio id="audioM" src="src/audio/m.mp3"></audio>
+    <audio id="audioN" src="src/audio/n.mp3"></audio>
+    <audio id="audioO" src="src/audio/o.mp3"></audio>
+    <audio id="audioP" src="src/audio/p.mp3"></audio>
+    <audio id="audioQ" src="src/audio/q.mp3"></audio>
+    <audio id="audioR" src="src/audio/r.mp3"></audio>
+    <audio id="audioS" src="src/audio/s.mp3"></audio>
+    <audio id="audioT" src="src/audio/t.mp3"></audio>
+    <audio id="audioU" src="src/audio/u.mp3"></audio>
+    <audio id="audioV" src="src/audio/v.mp3"></audio>
+    <audio id="audioW" src="src/audio/w.mp3"></audio>
+    <audio id="audioX" src="src/audio/x.mp3"></audio>
+    <audio id="audioY" src="src/audio/y.mp3"></audio>
+    <audio id="audioZ" src="src/audio/z.mp3"></audio>
+
+    <!-- Navigation Buttons -->
+    <div>
+        <button id="prevButton">Previous</button>
+        <button id="nextButton">Next</button>
+        <button id="randomizeButton">Randomize</button>
+    </div>
+
+    <script>
+        const images = document.querySelectorAll('img');
+        const audios = {
+            A: document.getElementById('audioA'),
+            B: document.getElementById('audioB'),
+            C: document.getElementById('audioC'),
+            D: document.getElementById('audioD'),
+            E: document.getElementById('audioE'),
+            F: document.getElementById('audioF'),
+            G: document.getElementById('audioG'),
+            H: document.getElementById('audioH'),
+            I: document.getElementById('audioI'),
+            J: document.getElementById('audioJ'),
+            K: document.getElementById('audioK'),
+            L: document.getElementById('audioL'),
+            M: document.getElementById('audioM'),
+            N: document.getElementById('audioN'),
+            O: document.getElementById('audioO'),
+            P: document.getElementById('audioP'),
+            Q: document.getElementById('audioQ'),
+            R: document.getElementById('audioR'),
+            S: document.getElementById('audioS'),
+            T: document.getElementById('audioT'),
+            U: document.getElementById('audioU'),
+            V: document.getElementById('audioV'),
+            W: document.getElementById('audioW'),
+            X: document.getElementById('audioX'),
+            Y: document.getElementById('audioY'),
+            Z: document.getElementById('audioZ')
+        };
+
+        let currentIndex = 0;
+
+        function showImage(index) {
+            // Stop any currently playing audio
+            for (let audio of Object.values(audios)) {
+                audio.pause();
+                audio.currentTime = 0;  // Reset the audio playback
+            }
+
+            // Show the selected image
+            images.forEach((img, i) => img.classList.toggle('active', i === index));
+
+            // Get the letter from the alt attribute of the active image
+            const currentLetter = images[index].alt;
+
+            // Play the corresponding audio after a 500ms delay
+            if (audios[currentLetter]) {
+                setTimeout(() => {
+                    audios[currentLetter].play();
+                }, 500);
+            }
+        }
+
+        // Next button functionality
+        const nextButton = document.getElementById('nextButton');
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        });
+
+        // Previous button functionality
+        const prevButton = document.getElementById('prevButton');
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            showImage(currentIndex);
+        });
+
+        // Randomize button functionality
+        const randomizeButton = document.getElementById('randomizeButton');
+        randomizeButton.addEventListener('click', () => {
+            currentIndex = Math.floor(Math.random() * images.length);
+            showImage(currentIndex);
+        });
+
+        // Initially show the first image
+        showImage(currentIndex);
+    </script>
+</body>
+</html>
